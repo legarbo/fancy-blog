@@ -43,7 +43,7 @@ export default function PostPage({
         <PostDetails postId={postId} />
       </Suspense>
 
-      <h3 className="mt-4 mb-2">Comments</h3>
+      <h2 className="mt-4 mb-2">Comments</h2>
       <div className="card-stack">
         <Suspense
           fallback={
@@ -105,7 +105,7 @@ async function UserDetails({ userId }: { userId: number }) {
 async function Comments({ postId }: { postId: string }) {
   const comments = await getPostComments(postId)
 
-  return comments.map(comment => (
+  return comments.map((comment) => (
     <div key={comment.id} className="card">
       <div className="card-body">
         <div className="text-sm mb-1">{comment.email}</div>
