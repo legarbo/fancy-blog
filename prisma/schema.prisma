@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://leopoldogarcia:legar@localhost:5432/blog?schema=public"
+  url = env("DATABASE_URL")
 }
 
 model Todo {
