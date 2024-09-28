@@ -3,7 +3,7 @@ import "./styles.css"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "Read Only Blog",
+  title: "Fancy Blog",
 }
 
 export default function RootLayout({
