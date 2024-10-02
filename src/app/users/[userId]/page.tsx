@@ -95,11 +95,11 @@ async function UserDetails({ userId }: { userId: string }) {
 async function UserPosts({ userId }: { userId: string }) {
   const posts = await getUserPosts(userId)
 
-  return posts.map(post => <PostCard key={post.id} {...post} />)
+  return posts.map((post) => <PostCard key={post.id} {...post} />)
 }
 
 async function UserTodos({ userId }: { userId: string }) {
   const todos = await getUserTodos(userId)
 
-  return todos.map(todo => <TodoItem key={todo.id} {...todo} />)
+  return todos.map((todo) => <TodoItem key={todo.id} {...todo} />)
 }
