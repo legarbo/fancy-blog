@@ -96,7 +96,7 @@ export async function deletePost(postId: string | number) {
 }
 
 function wait(duration: number) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(resolve, duration)
   })
 }

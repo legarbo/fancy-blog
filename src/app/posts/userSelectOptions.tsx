@@ -12,7 +12,7 @@ export async function UserSelectOptions({
   return (
     <>
       {withAnyOption && <option value="">Any</option>}
-      {users.map(user => (
+      {users.map((user) => (
         <option key={user.id} value={user.id}>
           {user.name}
         </option>
