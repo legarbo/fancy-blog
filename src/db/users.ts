@@ -6,7 +6,8 @@ export const getUsers = unstable_cache(
   cache(async () => {
     return await prisma.user.findMany()
   }),
-  ["users"]
+  ["users"],
+  { revalidate: 60 }
 )
 
 export const getUser = unstable_cache(
