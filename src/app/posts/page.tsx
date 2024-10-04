@@ -27,16 +27,16 @@ export default function PostsPage({
       <SearchForm userOptions={<UserSelectOptions withAnyOption />} />
 
       <div className="card-grid">
-        <Suspense
+        {/* <Suspense
           key={`${userId}-${query}`}
           fallback={
             <SkeletonList amount={6}>
               <SkeletonPostCard />
             </SkeletonList>
           }
-        >
-          <PostGrid userId={userId} query={query} />
-        </Suspense>
+        > */}
+        <PostGrid userId={userId} query={query} />
+        {/* </Suspense> */}
       </div>
     </>
   )
