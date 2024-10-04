@@ -27,6 +27,7 @@ export default function PostsPage({
       <SearchForm userOptions={<UserSelectOptions withAnyOption />} />
 
       <div className="card-grid">
+        Hola
         <Suspense
           key={`${userId}-${query}`}
           fallback={
