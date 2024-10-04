@@ -4,30 +4,32 @@ import { unstable_cache } from "next/cache"
 import { cache } from "react"
 
 export const getPosts = unstable_cache(
-  async ({
-    query,
-    userId,
-  }: {
-    query?: string
-    userId?: string | number
-  } = {}) => {
-    await wait(2000)
+  cache(
+    async ({
+      query,
+      userId,
+    }: {
+      query?: string
+      userId?: string | number
+    } = {}) => {
+      await wait(2000)
 
-    const where: Prisma.PostFindManyArgs["where"] = {}
-    if (query) {
-      where.OR = [{ title: { contains: query } }, { body: { contains: query } }]
+      const where: Prisma.PostFindManyArgs["where"] = {}
+      if (query) {
+        where.OR = [
+          { title: { contains: query } },
+          { body: { contains: query } },
+        ]
+      }
+
+      if (userId) {
+        where.userId = Number(userId)
+      }
+
+      return prisma.post.findMany({ where })
     }
-
-    if (userId) {
-      where.userId = Number(userId)
-    }
-
-    return prisma.post.findMany({ where })
-  },
-  ["posts"],
-  {
-    revalidate: 60,
-  }
+  ),
+  ["posts"]
 )
 
 export const getPost = unstable_cache(
@@ -45,6 +47,53 @@ export const getUserPosts = unstable_cache(
   }),
   ["posts", "userId"]
 )
+
+export async function createPost({
+  title,
+  body,
+  userId,
+}: {
+  title: string
+  body: string
+  userId: number
+}) {
+  await wait(2000)
+  return prisma.post.create({
+    data: {
+      title,
+      body,
+      userId,
+    },
+  })
+}
+
+export async function updatePost(
+  postId: string | number,
+  {
+    title,
+    body,
+    userId,
+  }: {
+    title: string
+    body: string
+    userId: number
+  }
+) {
+  await wait(2000)
+  return prisma.post.update({
+    where: { id: Number(postId) },
+    data: {
+      title,
+      body,
+      userId,
+    },
+  })
+}
+
+export async function deletePost(postId: string | number) {
+  await wait(2000)
+  return prisma.post.delete({ where: { id: Number(postId) } })
+}
 
 function wait(duration: number) {
   return new Promise((resolve) => {
