@@ -24,7 +24,7 @@ export const getPosts = unstable_cache(
         where.userId = Number(userId)
       }
 
-      return await prisma.post.findMany({ where })
+      return await prisma.post.findMany()
     }
   ),
   ["posts"]
