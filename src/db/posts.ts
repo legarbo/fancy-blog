@@ -3,32 +3,24 @@ import prisma from "./db"
 import { unstable_cache } from "next/cache"
 import { cache } from "react"
 
-export const getPosts = unstable_cache(
-  cache(
-    async ({
-      query,
-      userId,
-    }: {
-      query?: string
-      userId?: string | number
-    } = {}) => {
-      const where: Prisma.PostFindManyArgs["where"] = {}
-      if (query) {
-        where.OR = [
-          { title: { contains: query } },
-          { body: { contains: query } },
-        ]
-      }
+export const getPosts = async ({
+  query,
+  userId,
+}: {
+  query?: string
+  userId?: string | number
+} = {}) => {
+  const where: Prisma.PostFindManyArgs["where"] = {}
+  if (query) {
+    where.OR = [{ title: { contains: query } }, { body: { contains: query } }]
+  }
 
-      if (userId) {
-        where.userId = Number(userId)
-      }
+  if (userId) {
+    where.userId = Number(userId)
+  }
 
-      return await prisma.post.findMany()
-    }
-  ),
-  ["posts"]
-)
+  return await prisma.post.findMany({ where })
+}
 
 export const getPost = unstable_cache(
   cache(async (postId: string | number) => {
