@@ -13,16 +13,16 @@ datasource db {
 }
 
 model Todo {
-  id        Int     @id @default(autoincrement())
+  id        String     @id @default(uuid())
   title     String
   completed Boolean @default(false)
-  userId    Int
+  userId    String
 
   User User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-  id          Int    @id @default(autoincrement())
+  id          String    @id @default(uuid())
   name        String
   email       String
   website     String
@@ -37,20 +37,20 @@ model User {
 }
 
 model Post {
-  id     Int    @id @default(autoincrement())
+  id     String    @id @default(uuid())
   title  String
   body   String
-  userId Int
+  userId String
 
   user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   comments Comment[]
 }
 
 model Comment {
-  id     Int    @id @default(autoincrement())
+  id     String    @id @default(uuid())
   email  String
   body   String
-  postId Int
+  postId String
 
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 }

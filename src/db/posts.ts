@@ -8,7 +8,7 @@ export const getPosts = async ({
   userId,
 }: {
   query?: string
-  userId?: string | number
+  userId?: string
 } = {}) => {
   const where: Prisma.PostFindManyArgs["where"] = {}
   if (query) {
@@ -16,22 +16,22 @@ export const getPosts = async ({
   }
 
   if (userId) {
-    where.userId = Number(userId)
+    where.userId = userId
   }
 
   return await prisma.post.findMany({ where })
 }
 
 export const getPost = unstable_cache(
-  cache(async (postId: string | number) => {
-    return await prisma.post.findUnique({ where: { id: Number(postId) } })
+  cache(async (postId: string) => {
+    return await prisma.post.findUnique({ where: { id: postId } })
   }),
   ["posts", "postId"]
 )
 
 export const getUserPosts = unstable_cache(
-  cache(async (userId: string | number) => {
-    return await prisma.post.findMany({ where: { userId: Number(userId) } })
+  cache(async (userId: string) => {
+    return await prisma.post.findMany({ where: { userId: userId } })
   }),
   ["posts", "userId"]
 )
@@ -43,7 +43,7 @@ export async function createPost({
 }: {
   title: string
   body: string
-  userId: number
+  userId: string
 }) {
   return await prisma.post.create({
     data: {
@@ -55,7 +55,7 @@ export async function createPost({
 }
 
 export async function updatePost(
-  postId: string | number,
+  postId: string,
   {
     title,
     body,
@@ -63,11 +63,11 @@ export async function updatePost(
   }: {
     title: string
     body: string
-    userId: number
+    userId: string
   }
 ) {
   return await prisma.post.update({
-    where: { id: Number(postId) },
+    where: { id: postId },
     data: {
       title,
       body,
@@ -76,6 +76,6 @@ export async function updatePost(
   })
 }
 
-export async function deletePost(postId: string | number) {
-  return await prisma.post.delete({ where: { id: Number(postId) } })
+export async function deletePost(postId: string) {
+  return await prisma.post.delete({ where: { id: postId } })
 }
