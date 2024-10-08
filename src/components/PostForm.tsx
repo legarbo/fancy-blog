@@ -9,7 +9,7 @@ import { createPostAction, editPostAction } from "@/app/actions/post"
 
 type Props = {
   userSelectOptions: ReactNode
-  post?: { id: number; title: string; body: string; userId: number }
+  post?: { id: string; title: string; body: string; userId: number }
 }
 
 export function PostForm({ post, userSelectOptions }: Props) {
