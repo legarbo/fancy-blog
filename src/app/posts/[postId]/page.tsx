@@ -94,7 +94,7 @@ async function PostDetails({ postId }: { postId: string }) {
   )
 }
 
-async function UserDetails({ userId }: { userId: number }) {
+async function UserDetails({ userId }: { userId: string }) {
   const user = await getUser(userId)
 
   if (user == null) return notFound()

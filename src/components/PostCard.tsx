@@ -6,7 +6,7 @@ export function PostCard({
   title,
   body,
 }: {
-  id: number
+  id: string
   title: string
   body: string
 }) {
