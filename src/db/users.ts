@@ -11,8 +11,8 @@ export const getUsers = unstable_cache(
 )
 
 export const getUser = unstable_cache(
-  cache(async (userId: string | number) => {
-    return await prisma.user.findUnique({ where: { id: Number(userId) } })
+  cache(async (userId: string) => {
+    return await prisma.user.findUnique({ where: { id: userId } })
   }),
   ["user", "userId"]
 )
