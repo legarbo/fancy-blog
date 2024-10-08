@@ -10,8 +10,8 @@ export const getTodos = unstable_cache(
 )
 
 export const getUserTodos = unstable_cache(
-  cache(async (userId: string | number) => {
-    return await prisma.todo.findMany({ where: { userId: Number(userId) } })
+  cache(async (userId: string) => {
+    return await prisma.todo.findMany({ where: { userId: userId } })
   }),
   ["todos", "userId"]
 )
