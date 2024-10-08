@@ -4,7 +4,7 @@ import { createPost, deletePost, updatePost } from "@/db/posts"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
-export async function deletePostAction(postId: string | number) {
+export async function deletePostAction(postId: string) {
   const post = await deletePost(postId)
 
   revalidatePath("/posts")
@@ -14,7 +14,7 @@ export async function deletePostAction(postId: string | number) {
 }
 
 export async function editPostAction(
-  postId: number,
+  postId: string,
   prevState: unknown,
   formData: FormData
 ) {
@@ -44,7 +44,7 @@ function validatePost(formData: FormData) {
   const errors: { title?: string; body?: string; userId?: string } = {}
   const title = formData.get("title") as string
   const body = formData.get("body") as string
-  const userId = Number(formData.get("userId"))
+  const userId = formData.get("userId") as string
   let isValid = true
 
   if (title === "") {
@@ -57,7 +57,7 @@ function validatePost(formData: FormData) {
     isValid = false
   }
 
-  if (isNaN(userId)) {
+  if (userId == "") {
     errors.userId = "Required"
     isValid = false
   }
