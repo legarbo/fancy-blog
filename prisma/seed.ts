@@ -6,10 +6,10 @@ const prisma = new PrismaClient()
 async function createUsers() {
   await prisma.user.deleteMany()
   return Promise.all(
-    seedData.users.map(async user => {
+    seedData.users.map(async (user) => {
       return prisma.user.create({
         data: {
-          id: user.id,
+          id: String(user.id),
           name: user.name,
           email: user.email,
           website: user.website,
@@ -27,13 +27,13 @@ async function createUsers() {
 async function createTodos() {
   await prisma.todo.deleteMany()
   return Promise.all(
-    seedData.todos.map(async todo => {
+    seedData.todos.map(async (todo) => {
       return prisma.todo.create({
         data: {
-          id: todo.id,
+          id: String(todo.id),
           title: todo.title,
           completed: todo.completed,
-          userId: todo.userId,
+          userId: String(todo.userId),
         },
       })
     })
@@ -43,13 +43,13 @@ async function createTodos() {
 async function createPosts() {
   await prisma.post.deleteMany()
   return Promise.all(
-    seedData.posts.map(async post => {
+    seedData.posts.map(async (post) => {
       return prisma.post.create({
         data: {
-          id: post.id,
+          id: String(post.id),
           title: post.title,
           body: post.body,
-          userId: post.userId,
+          userId: String(post.userId),
         },
       })
     })
@@ -59,13 +59,13 @@ async function createPosts() {
 async function createComments() {
   await prisma.comment.deleteMany()
   return Promise.all(
-    seedData.comments.map(async comment => {
+    seedData.comments.map(async (comment) => {
       return prisma.comment.create({
         data: {
-          id: comment.id,
+          id: String(comment.id),
           email: comment.email,
           body: comment.body,
-          postId: comment.postId,
+          postId: String(comment.postId),
         },
       })
     })
@@ -83,7 +83,7 @@ main()
   .then(async () => {
     await prisma.$disconnect()
   })
-  .catch(async e => {
+  .catch(async (e) => {
     console.error(e)
     await prisma.$disconnect()
     process.exit(1)
